@@ -1,5 +1,4 @@
-# LGC
-Lugosi Compiller 
+# LGC - Lugosi Compiller
 
 Projeto de Compilador para linguagem hipotética "Lugosi"
 
