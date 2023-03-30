@@ -67,7 +67,7 @@ TOKEN :
 void Lugosi () :
 {Token t;}
 {
-  Main() (<FUNCTION>)?
+  Main() (Func())*
   <EOF>
 }
 
@@ -80,13 +80,13 @@ void Main () :
 void Vardecl () :
 {Token t;}
 {
-  <VARDECL> Tipo() t.image <EOL> Vardecl_()
+  Tipo() <ID> <EOL> Vardecl_()
 }
 
 void Vardecl_ () :
 {Token t;}
 {
-  (t.image <EOL> Vardecl_())?
+  (<ID> <EOL> Vardecl_())?
 }
 
 void Tipo () :
@@ -120,13 +120,13 @@ void Exp () :
 }
 
 void Fator () :
-{Token t; }
+{}
 {
-  t.image | (t.image <APARENT> (ListaExp())? <FPARENT>) |
+  <ID> ( <APARENT> (ListaExp())? <FPARENT> )? |
   <NUM> | <BOOL_TRUE> | <BOOL_FALSE>
 }
 
-void Op () :
+void Op () : // FEITO
 {}
 {
   <PLUS> | <MINUS> | 
@@ -135,12 +135,32 @@ void Op () :
   <LESSTHAN> | <MORETHAN> | <EQUAL> 
 }
 
-void ListaExp() :
+void ListaExp() : //FEITO
 {}
 {
-  Exp() | (ListaExp() <COMMA> Exp())
+  Exp() ListaExp_ :
 }
 
+void ListaExp_() : //FEITO
+{}
+{
+  (<COMMA> Exp() ListaExp_())?
+}
+
+void Func () : 
+{}
+{
+  <FUNCTION> Tipo() <ID> <APARENT> ListaArg() <FPARENT> 
+  <ACHAVES> Vardecl() SeqComandos() <FCHAVES> Func_()
+}
+
+void Func_() :
+{
+  <FUNCTION> Tipo() <ID> <APARENT> (ListaArg())? <FPARENT>
+  <ACHAVES> Vardecl() SeqComandos() <FCHAVES> Func_() 
+}
+
+void ListaArg () : 
 
 
 
