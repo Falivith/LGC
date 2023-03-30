@@ -122,15 +122,26 @@ void Exp () :
 void Fator () :
 {Token t; }
 {
-  t.image | t.image <APARENT> (ListaExp())? <FPARENT> |
+  t.image | (t.image <APARENT> (ListaExp())? <FPARENT>) |
   <NUM> | <BOOL_TRUE> | <BOOL_FALSE>
 }
 
 void Op () :
 {}
 {
-  <PLUS> | <MINUS> | <MULT>
+  <PLUS> | <MINUS> | 
+  <MULT> | <DIV> | 
+  <AND> | <OR> | 
+  <LESSTHAN> | <MORETHAN> | <EQUAL> 
 }
+
+void ListaExp() :
+{}
+{
+  Exp() | (ListaExp() <COMMA> Exp())
+}
+
+
 
 
 {
