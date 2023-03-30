@@ -26,8 +26,6 @@ TOKEN :
 | <VARDECL: "var">
 | <TIPO_INT: "int">
 | <TIPO_BOOL: "bool">
-| <TIPO_FLOAT: "float">
-| <TIPO_VOID: "void">
 | <ACHAVES: "{">
 | <FCHAVES: "}">
 | <APARENT: "(">
@@ -64,74 +62,11 @@ TOKEN :
 void Lugosi () :
 {Token t;}
 {
-  Main() (<FUNCTION>)?
-  <EOF>
-}
-
-void Main () :
-{}
-{
-  <MAIN> <ACHAVES> Vardecl() SeqComandos() <FCHAVES>
-}
-
-void Vardecl () :
-{Token t;}
-{
-  <VARDECL> Tipo() t.image <EOL> Vardecl_()
-}
-
-void Vardecl_ () :
-{Token t;}
-{
-  (t.image <EOL> Vardecl_())?
-}
-
-void Tipo () :
-{} 
-{
-  <TIPO_BOOL> | <TIPO_FLOAT> | <TIPO_INT> | <TIPO_VOID>
-}
-
-void SeqComandos () : 
-{}
-{
-  Comando() SeqComandos_()
-}
-
-void SeqComandos_() : 
-{}
-{
-  (Comando() SeqComandos_())?
-}
-
-void Comando () : //Implementar
-{}
-{
-
-}
-
-void Exp () : 
-{}
-{
-  (<APARENT> Exp() Op() Exp() <FPARENT>) | Fator()
-}
-
-void Fator () :
-{Token t; }
-{
-  t.image | t.image <APARENT> (ListaExp())? <FPARENT> |
-  <NUM> | 
-}
-
-
-{
   (
     <MAIN> { System.out.println("Palavra reservada: main");}
     | <VARDECL> { System.out.println("Declaração de Variável: var");}
     | <TIPO_INT> { System.out.println("Tipo Inteiro: int");}
     | <TIPO_BOOL> { System.out.println("Tipo Booleano: bool");}
-    | <TIPO_FLOAT> { System.out.println("Tipo Inteiro: float");}
-    | <TIPO_VOID> { System.out.println("Tipo Booleano: void");}
     | <ACHAVES> { System.out.println("Abre chaves: {");}
     | <FCHAVES> { System.out.println("Fecha chaves: }");}
     | <APARENT> { System.out.println("Abre parenteses: (");}
