@@ -33,6 +33,9 @@ TOKEN :
 | <APARENT: "(">
 | <FPARENT: ")">
 
+| <BOOL_FALSE: "false">
+| <BOOL_TRUE: "true">
+
 | <IF: "if">
 | <WHILE: "while">
 | <DO: "do">
@@ -45,8 +48,8 @@ TOKEN :
 | <COMMA: ",">
 | <PLUS: "+" >
 | <MINUS:  "-" >
-| <STAR:  "*" >
-| <SLASH:  "/" >
+| <MULT:  "*" >
+| <DIV:  "/" >
 | <AND:  "&&" >
 | <OR:  "||" >
 | <LESSTHAN:  "<" >
@@ -120,7 +123,13 @@ void Fator () :
 {Token t; }
 {
   t.image | t.image <APARENT> (ListaExp())? <FPARENT> |
-  <NUM> | 
+  <NUM> | <BOOL_TRUE> | <BOOL_FALSE>
+}
+
+void Op () :
+{}
+{
+  <PLUS> | <MINUS> | <MULT>
 }
 
 
@@ -149,8 +158,8 @@ void Fator () :
     | <COMMA> { System.out.println("Vírgula: ,");}
     | <PLUS> { System.out.println("Mais: +");}
     | <MINUS> { System.out.println("Menos: -");}
-    | <STAR> { System.out.println("Asterisco: *");}
-    | <SLASH> { System.out.println("Barra: /");}
+    | <MULT> { System.out.println("Asterisco: *");}
+    | <DIV> { System.out.println("Barra: /");}
     | <AND> { System.out.println("And: &&");}
     | <OR> { System.out.println("Ou: ||");}
     | <LESSTHAN> { System.out.println("Menor que: <");}
