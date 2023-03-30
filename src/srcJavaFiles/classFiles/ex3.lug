@@ -1,0 +1,14 @@
+main{
+    var int teste;
+    teste := 9;
+    print( tester (teste) );
+}
+
+function int tester(int n) {
+	var int total;
+	total := 0;
+	do {
+		total := (total + n);
+	} while((total < 10));
+	return total;
+}

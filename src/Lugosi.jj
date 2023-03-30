@@ -157,14 +157,7 @@ void Func () : //FEITO
 {}
 {
   <FUNCTION> Tipo() <ID> <APARENT> ListaArg() <FPARENT> 
-  <ACHAVES> Vardecl() SeqComandos() <FCHAVES> Func_()
-}
-
-void Func_() : //FEITO
-{}
-{
-  <FUNCTION> Tipo() <ID> <APARENT> (ListaArg())? <FPARENT>
-  <ACHAVES> Vardecl() SeqComandos() <FCHAVES> Func_() 
+  <ACHAVES> Vardecl() SeqComandos() <FCHAVES>
 }
 
 void ListaArg () : //FEITO
@@ -178,4 +171,3 @@ void ListaArg_ () : //FEITO
 {
   (<COMMA> Tipo() <ID> ListaArg_())?
 }
-
