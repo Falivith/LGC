@@ -64,50 +64,61 @@ TOKEN :
 
 }
 
-void Lugosi () :
-{Token t;}
+void Lugosi () : //FEITO
+{}
 {
   Main() (Func())*
   <EOF>
 }
 
-void Main () :
+void Main () : //FEITO
 {}
 {
   <MAIN> <ACHAVES> Vardecl() SeqComandos() <FCHAVES>
 }
 
-void Vardecl () :
+void Vardecl () : //FEITO
 {Token t;}
 {
   Tipo() <ID> <EOL> Vardecl_()
 }
 
-void Vardecl_ () :
+void Vardecl_ () : //FEITO
 {Token t;}
 {
   (<ID> <EOL> Vardecl_())?
 }
 
-void Tipo () :
+void Tipo () : //FEITO
 {} 
 {
   <TIPO_BOOL> | <TIPO_FLOAT> | <TIPO_INT> | <TIPO_VOID>
 }
 
-void SeqComandos () : 
+void SeqComandos () : //FEITO
 {}
 {
   Comando() SeqComandos_()
 }
 
-void SeqComandos_() : 
+void SeqComandos_() : //FEITO
 {}
 {
   (Comando() SeqComandos_())?
 }
 
 void Comando () : //Implementar
+{}
+{
+    (<ID> Comando_())
+  | (<IF> <APARENT> Exp() <FPARENT> <DO> <ACHAVES> SeqComandos() <FCHAVES> <EOL>)
+  | (<WHILE> <APARENT> Exp() <FPARENT> <DO> <ACHAVES> SeqComandos() <FCHAVES> <EOL>)
+  | (<DO> <ACHAVES> SeqComandos() <FCHAVES> <WHILE> <APARENT> Exp() <FPARENT> <EOL>)
+  | (<RETURN> )
+
+}
+
+void Comando_ () :
 {}
 {
 
@@ -147,20 +158,31 @@ void ListaExp_() : //FEITO
   (<COMMA> Exp() ListaExp_())?
 }
 
-void Func () : 
+void Func () : //FEITO
 {}
 {
   <FUNCTION> Tipo() <ID> <APARENT> ListaArg() <FPARENT> 
   <ACHAVES> Vardecl() SeqComandos() <FCHAVES> Func_()
 }
 
-void Func_() :
+void Func_() : //FEITO
+{}
 {
   <FUNCTION> Tipo() <ID> <APARENT> (ListaArg())? <FPARENT>
   <ACHAVES> Vardecl() SeqComandos() <FCHAVES> Func_() 
 }
 
-void ListaArg () : 
+void ListaArg () : //FEITO
+{}
+{
+  Tipo() <ID> ListaArg_()
+}
+
+void ListaArg_ () : //FEITO
+{}
+{
+  (<COMMA> Tipo() <ID> ListaArg_())?
+}
 
 
 
