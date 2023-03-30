@@ -1,5 +1,5 @@
 main{
     var int teste;
     teste := 9;
-    print (teste);
+    print (teste);;
 }

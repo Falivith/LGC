@@ -78,15 +78,9 @@ void Main () : //FEITO
 }
 
 void Vardecl () : //FEITO
-{Token t;}
+{}
 {
-  Tipo() <ID> <EOL> Vardecl_()
-}
-
-void Vardecl_ () : //FEITO
-{Token t;}
-{
-  (<ID> <EOL> Vardecl_())?
+  (<VARDECL> Tipo() <ID> <EOL>)*
 }
 
 void Tipo () : //FEITO
@@ -114,14 +108,15 @@ void Comando () : //Implementar
   | (<IF> <APARENT> Exp() <FPARENT> <DO> <ACHAVES> SeqComandos() <FCHAVES> <EOL>)
   | (<WHILE> <APARENT> Exp() <FPARENT> <DO> <ACHAVES> SeqComandos() <FCHAVES> <EOL>)
   | (<DO> <ACHAVES> SeqComandos() <FCHAVES> <WHILE> <APARENT> Exp() <FPARENT> <EOL>)
-  | (<RETURN> )
+  | (<RETURN> Exp() <EOL>)
+  | (<PRINT> <APARENT> Exp() <FPARENT> <EOL>)
 
 }
 
 void Comando_ () :
 {}
 {
-
+  (<ASSIGN> Exp() <EOL>) | (<APARENT> (ListaExp())? <FPARENT> <EOL>)
 }
 
 void Exp () : 
@@ -149,7 +144,7 @@ void Op () : // FEITO
 void ListaExp() : //FEITO
 {}
 {
-  Exp() ListaExp_ :
+  Exp() ListaExp_()
 }
 
 void ListaExp_() : //FEITO
@@ -184,43 +179,3 @@ void ListaArg_ () : //FEITO
   (<COMMA> Tipo() <ID> ListaArg_())?
 }
 
-
-
-{
-  (
-    <MAIN> { System.out.println("Palavra reservada: main");}
-    | <VARDECL> { System.out.println("Declaração de Variável: var");}
-    | <TIPO_INT> { System.out.println("Tipo Inteiro: int");}
-    | <TIPO_BOOL> { System.out.println("Tipo Booleano: bool");}
-    | <TIPO_FLOAT> { System.out.println("Tipo Inteiro: float");}
-    | <TIPO_VOID> { System.out.println("Tipo Booleano: void");}
-    | <ACHAVES> { System.out.println("Abre chaves: {");}
-    | <FCHAVES> { System.out.println("Fecha chaves: }");}
-    | <APARENT> { System.out.println("Abre parenteses: (");}
-    | <FPARENT> { System.out.println("Fecha parenteses: )");}
-
-    | <IF> { System.out.println("If: if");}
-    | <WHILE> { System.out.println("While: while");}
-    | <DO> { System.out.println("Do: do");}
-    | <RETURN> { System.out.println("Retorno: return");}
-    | <PRINT> { System.out.println("Imprime: print");}
-    | <FUNCTION> { System.out.println("Função: function");}
-
-    | <ASSIGN> { System.out.println("Assinala: := ");}
-    | <EOL> { System.out.println("Fim de linha: ;");}
-    | <COMMA> { System.out.println("Vírgula: ,");}
-    | <PLUS> { System.out.println("Mais: +");}
-    | <MINUS> { System.out.println("Menos: -");}
-    | <MULT> { System.out.println("Asterisco: *");}
-    | <DIV> { System.out.println("Barra: /");}
-    | <AND> { System.out.println("And: &&");}
-    | <OR> { System.out.println("Ou: ||");}
-    | <LESSTHAN> { System.out.println("Menor que: <");}
-    | <MORETHAN> { System.out.println("Maior que: >");}
-    | <EQUAL> { System.out.println("Igual: ==");}
-
-    | t = <NUM> { System.out.println("Número: " + t.image);}
-    | t = <ID> { System.out.println("Identificador: " + t.image);}
-  )*
-  <EOF> 
-}

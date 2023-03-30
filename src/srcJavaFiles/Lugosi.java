@@ -9,164 +9,354 @@ public class Lugosi implements LugosiConstants {
   }
 
   static final public void Lugosi() throws ParseException {
- Token t;
+    Main();
     label_1:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case MAIN:
-      case VARDECL:
-      case TIPO_INT:
-      case TIPO_BOOL:
-      case ACHAVES:
-      case FCHAVES:
-      case APARENT:
-      case FPARENT:
-      case IF:
-      case WHILE:
-      case DO:
-      case RETURN:
-      case PRINT:
       case FUNCTION:
-      case ASSIGN:
-      case EOL:
-      case COMMA:
-      case PLUS:
-      case MINUS:
-      case STAR:
-      case SLASH:
-      case AND:
-      case OR:
-      case LESSTHAN:
-      case MORETHAN:
-      case EQUAL:
-      case NUM:
-      case ID:
         ;
         break;
       default:
         jj_la1[0] = jj_gen;
         break label_1;
       }
+      Func();
+    }
+    jj_consume_token(0);
+  }
+
+  static final public void Main() throws ParseException {
+    jj_consume_token(MAIN);
+    jj_consume_token(ACHAVES);
+    Vardecl();
+    SeqComandos();
+    jj_consume_token(FCHAVES);
+  }
+
+  static final public void Vardecl() throws ParseException {
+    label_2:
+    while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case MAIN:
-        jj_consume_token(MAIN);
-           System.out.println("Palavra reservada: main");
-        break;
       case VARDECL:
-        jj_consume_token(VARDECL);
-                System.out.println("Declara\u00e7\u00e3o de Vari\u00e1vel: var");
-        break;
-      case TIPO_INT:
-        jj_consume_token(TIPO_INT);
-                 System.out.println("Tipo Inteiro: int");
-        break;
-      case TIPO_BOOL:
-        jj_consume_token(TIPO_BOOL);
-                  System.out.println("Tipo Booleano: bool");
-        break;
-      case ACHAVES:
-        jj_consume_token(ACHAVES);
-                System.out.println("Abre chaves: {");
-        break;
-      case FCHAVES:
-        jj_consume_token(FCHAVES);
-                System.out.println("Fecha chaves: }");
-        break;
-      case APARENT:
-        jj_consume_token(APARENT);
-                System.out.println("Abre parenteses: (");
-        break;
-      case FPARENT:
-        jj_consume_token(FPARENT);
-                System.out.println("Fecha parenteses: )");
-        break;
-      case IF:
-        jj_consume_token(IF);
-           System.out.println("If: if");
-        break;
-      case WHILE:
-        jj_consume_token(WHILE);
-              System.out.println("While: while");
-        break;
-      case DO:
-        jj_consume_token(DO);
-           System.out.println("Do: do");
-        break;
-      case RETURN:
-        jj_consume_token(RETURN);
-               System.out.println("Retorno: return");
-        break;
-      case PRINT:
-        jj_consume_token(PRINT);
-              System.out.println("Imprime: print");
-        break;
-      case FUNCTION:
-        jj_consume_token(FUNCTION);
-                 System.out.println("Fun\u00e7\u00e3o: function");
-        break;
-      case ASSIGN:
-        jj_consume_token(ASSIGN);
-               System.out.println("Assinala: := ");
-        break;
-      case EOL:
-        jj_consume_token(EOL);
-            System.out.println("Fim de linha: ;");
-        break;
-      case COMMA:
-        jj_consume_token(COMMA);
-              System.out.println("V\u00edrgula: ,");
-        break;
-      case PLUS:
-        jj_consume_token(PLUS);
-             System.out.println("Mais: +");
-        break;
-      case MINUS:
-        jj_consume_token(MINUS);
-              System.out.println("Menos: -");
-        break;
-      case STAR:
-        jj_consume_token(STAR);
-             System.out.println("Asterisco: *");
-        break;
-      case SLASH:
-        jj_consume_token(SLASH);
-              System.out.println("Barra: /");
-        break;
-      case AND:
-        jj_consume_token(AND);
-            System.out.println("And: &&");
-        break;
-      case OR:
-        jj_consume_token(OR);
-           System.out.println("Ou: ||");
-        break;
-      case LESSTHAN:
-        jj_consume_token(LESSTHAN);
-                 System.out.println("Menor que: <");
-        break;
-      case MORETHAN:
-        jj_consume_token(MORETHAN);
-                 System.out.println("Maior que: >");
-        break;
-      case EQUAL:
-        jj_consume_token(EQUAL);
-              System.out.println("Igual: ==");
-        break;
-      case NUM:
-        t = jj_consume_token(NUM);
-                System.out.println("N\u00famero: " + t.image);
-        break;
-      case ID:
-        t = jj_consume_token(ID);
-               System.out.println("Identificador: " + t.image);
+        ;
         break;
       default:
         jj_la1[1] = jj_gen;
-        jj_consume_token(-1);
-        throw new ParseException();
+        break label_2;
       }
+      jj_consume_token(VARDECL);
+      Tipo();
+      jj_consume_token(ID);
+      jj_consume_token(EOL);
     }
-    jj_consume_token(0);
+  }
+
+  static final public void Tipo() throws ParseException {
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case TIPO_BOOL:
+      jj_consume_token(TIPO_BOOL);
+      break;
+    case TIPO_FLOAT:
+      jj_consume_token(TIPO_FLOAT);
+      break;
+    case TIPO_INT:
+      jj_consume_token(TIPO_INT);
+      break;
+    case TIPO_VOID:
+      jj_consume_token(TIPO_VOID);
+      break;
+    default:
+      jj_la1[2] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
+  }
+
+  static final public void SeqComandos() throws ParseException {
+    Comando();
+    SeqComandos_();
+  }
+
+  static final public void SeqComandos_() throws ParseException {
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case IF:
+    case WHILE:
+    case DO:
+    case RETURN:
+    case PRINT:
+    case ID:
+      Comando();
+      SeqComandos_();
+      break;
+    default:
+      jj_la1[3] = jj_gen;
+      ;
+    }
+  }
+
+  static final public void Comando() throws ParseException {
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case ID:
+      jj_consume_token(ID);
+      Comando_();
+      break;
+    case IF:
+      jj_consume_token(IF);
+      jj_consume_token(APARENT);
+      Exp();
+      jj_consume_token(FPARENT);
+      jj_consume_token(DO);
+      jj_consume_token(ACHAVES);
+      SeqComandos();
+      jj_consume_token(FCHAVES);
+      jj_consume_token(EOL);
+      break;
+    case WHILE:
+      jj_consume_token(WHILE);
+      jj_consume_token(APARENT);
+      Exp();
+      jj_consume_token(FPARENT);
+      jj_consume_token(DO);
+      jj_consume_token(ACHAVES);
+      SeqComandos();
+      jj_consume_token(FCHAVES);
+      jj_consume_token(EOL);
+      break;
+    case DO:
+      jj_consume_token(DO);
+      jj_consume_token(ACHAVES);
+      SeqComandos();
+      jj_consume_token(FCHAVES);
+      jj_consume_token(WHILE);
+      jj_consume_token(APARENT);
+      Exp();
+      jj_consume_token(FPARENT);
+      jj_consume_token(EOL);
+      break;
+    case RETURN:
+      jj_consume_token(RETURN);
+      Exp();
+      jj_consume_token(EOL);
+      break;
+    case PRINT:
+      jj_consume_token(PRINT);
+      jj_consume_token(APARENT);
+      Exp();
+      jj_consume_token(FPARENT);
+      jj_consume_token(EOL);
+      break;
+    default:
+      jj_la1[4] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
+  }
+
+  static final public void Comando_() throws ParseException {
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case ASSIGN:
+      jj_consume_token(ASSIGN);
+      Exp();
+      jj_consume_token(EOL);
+      break;
+    case APARENT:
+      jj_consume_token(APARENT);
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case APARENT:
+      case BOOL_FALSE:
+      case BOOL_TRUE:
+      case NUM:
+      case ID:
+        ListaExp();
+        break;
+      default:
+        jj_la1[5] = jj_gen;
+        ;
+      }
+      jj_consume_token(FPARENT);
+      jj_consume_token(EOL);
+      break;
+    default:
+      jj_la1[6] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
+  }
+
+  static final public void Exp() throws ParseException {
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case APARENT:
+      jj_consume_token(APARENT);
+      Exp();
+      Op();
+      Exp();
+      jj_consume_token(FPARENT);
+      break;
+    case BOOL_FALSE:
+    case BOOL_TRUE:
+    case NUM:
+    case ID:
+      Fator();
+      break;
+    default:
+      jj_la1[7] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
+  }
+
+  static final public void Fator() throws ParseException {
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case ID:
+      jj_consume_token(ID);
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case APARENT:
+        jj_consume_token(APARENT);
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case APARENT:
+        case BOOL_FALSE:
+        case BOOL_TRUE:
+        case NUM:
+        case ID:
+          ListaExp();
+          break;
+        default:
+          jj_la1[8] = jj_gen;
+          ;
+        }
+        jj_consume_token(FPARENT);
+        break;
+      default:
+        jj_la1[9] = jj_gen;
+        ;
+      }
+      break;
+    case NUM:
+      jj_consume_token(NUM);
+      break;
+    case BOOL_TRUE:
+      jj_consume_token(BOOL_TRUE);
+      break;
+    case BOOL_FALSE:
+      jj_consume_token(BOOL_FALSE);
+      break;
+    default:
+      jj_la1[10] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
+  }
+
+  static final public void Op() throws ParseException {
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case PLUS:
+      jj_consume_token(PLUS);
+      break;
+    case MINUS:
+      jj_consume_token(MINUS);
+      break;
+    case MULT:
+      jj_consume_token(MULT);
+      break;
+    case DIV:
+      jj_consume_token(DIV);
+      break;
+    case AND:
+      jj_consume_token(AND);
+      break;
+    case OR:
+      jj_consume_token(OR);
+      break;
+    case LESSTHAN:
+      jj_consume_token(LESSTHAN);
+      break;
+    case MORETHAN:
+      jj_consume_token(MORETHAN);
+      break;
+    case EQUAL:
+      jj_consume_token(EQUAL);
+      break;
+    default:
+      jj_la1[11] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
+  }
+
+  static final public void ListaExp() throws ParseException {
+    Exp();
+    ListaExp_();
+  }
+
+  static final public void ListaExp_() throws ParseException {
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case COMMA:
+      jj_consume_token(COMMA);
+      Exp();
+      ListaExp_();
+      break;
+    default:
+      jj_la1[12] = jj_gen;
+      ;
+    }
+  }
+
+  static final public void Func() throws ParseException {
+    jj_consume_token(FUNCTION);
+    Tipo();
+    jj_consume_token(ID);
+    jj_consume_token(APARENT);
+    ListaArg();
+    jj_consume_token(FPARENT);
+    jj_consume_token(ACHAVES);
+    Vardecl();
+    SeqComandos();
+    jj_consume_token(FCHAVES);
+    Func_();
+  }
+
+  static final public void Func_() throws ParseException {
+    jj_consume_token(FUNCTION);
+    Tipo();
+    jj_consume_token(ID);
+    jj_consume_token(APARENT);
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case TIPO_INT:
+    case TIPO_BOOL:
+    case TIPO_FLOAT:
+    case TIPO_VOID:
+      ListaArg();
+      break;
+    default:
+      jj_la1[13] = jj_gen;
+      ;
+    }
+    jj_consume_token(FPARENT);
+    jj_consume_token(ACHAVES);
+    Vardecl();
+    SeqComandos();
+    jj_consume_token(FCHAVES);
+    Func_();
+  }
+
+  static final public void ListaArg() throws ParseException {
+    Tipo();
+    jj_consume_token(ID);
+    ListaArg_();
+  }
+
+  static final public void ListaArg_() throws ParseException {
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case COMMA:
+      jj_consume_token(COMMA);
+      Tipo();
+      jj_consume_token(ID);
+      ListaArg_();
+      break;
+    default:
+      jj_la1[14] = jj_gen;
+      ;
+    }
   }
 
   static private boolean jj_initialized_once = false;
@@ -179,7 +369,7 @@ public class Lugosi implements LugosiConstants {
   static public Token jj_nt;
   static private int jj_ntk;
   static private int jj_gen;
-  static final private int[] jj_la1 = new int[2];
+  static final private int[] jj_la1 = new int[15];
   static private int[] jj_la1_0;
   static private int[] jj_la1_1;
   static {
@@ -187,10 +377,10 @@ public class Lugosi implements LugosiConstants {
       jj_la1_init_1();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0xffffffe0,0xffffffe0,};
+      jj_la1_0 = new int[] {0x400000,0x40,0x780,0x3e0000,0x3e0000,0x1a000,0x802000,0x1a000,0x1a000,0x2000,0x18000,0xfc000000,0x2000000,0x780,0x2000000,};
    }
    private static void jj_la1_init_1() {
-      jj_la1_1 = new int[] {0x1,0x1,};
+      jj_la1_1 = new int[] {0x0,0x0,0x0,0x10,0x10,0x18,0x0,0x18,0x18,0x0,0x18,0x7,0x0,0x0,0x0,};
    }
 
   /** Constructor with InputStream. */
@@ -211,7 +401,7 @@ public class Lugosi implements LugosiConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 2; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 15; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -225,7 +415,7 @@ public class Lugosi implements LugosiConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 2; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 15; i++) jj_la1[i] = -1;
   }
 
   /** Constructor. */
@@ -242,7 +432,7 @@ public class Lugosi implements LugosiConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 2; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 15; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -252,7 +442,7 @@ public class Lugosi implements LugosiConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 2; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 15; i++) jj_la1[i] = -1;
   }
 
   /** Constructor with generated Token Manager. */
@@ -268,7 +458,7 @@ public class Lugosi implements LugosiConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 2; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 15; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -277,7 +467,7 @@ public class Lugosi implements LugosiConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 2; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 15; i++) jj_la1[i] = -1;
   }
 
   static private Token jj_consume_token(int kind) throws ParseException {
@@ -328,12 +518,12 @@ public class Lugosi implements LugosiConstants {
   /** Generate ParseException. */
   static public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[33];
+    boolean[] la1tokens = new boolean[37];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
     }
-    for (int i = 0; i < 2; i++) {
+    for (int i = 0; i < 15; i++) {
       if (jj_la1[i] == jj_gen) {
         for (int j = 0; j < 32; j++) {
           if ((jj_la1_0[i] & (1<<j)) != 0) {
@@ -345,7 +535,7 @@ public class Lugosi implements LugosiConstants {
         }
       }
     }
-    for (int i = 0; i < 33; i++) {
+    for (int i = 0; i < 37; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;
