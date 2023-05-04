@@ -3,8 +3,3 @@ main{
     teste := 9;
     print (teste);
 }
-
-function{
-    var bool x;
-    print(x);
-}

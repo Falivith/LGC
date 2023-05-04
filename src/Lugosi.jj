@@ -1,11 +1,210 @@
 PARSER_BEGIN(Lugosi)
 import java.io.*;
+import java.util.ArrayList;
+
+class LugosiA{
+  Main main;
+  ArrayList<Func> functions;
+
+  Lugosi(Main m, ArrayList<Func> f)
+  {
+    this.main = m;
+    this.functions = f;
+  }
+}
+
+class Main{
+  ArrayList<Vardecl> var;
+  ArrayList<Comando> comandos;
+
+  Main(ArrayList<Vardecl> vd, ArrayList<Comando> cm){
+    this.var = vd;
+    this.comandos = cm; 
+  }
+}
+
+class Vardecl{
+  String tipo;
+  String var;
+
+  Vardecl(Token id, String type){
+    this.var = id.image;
+    this.tipo = type;
+  }
+}
+
+class seqComandos{
+  ArrayList <Comando> comandos;
+  seqComandos(ArrayList<Comando> c){
+    this.comandos = c;
+  }
+}
+
+class Comando{}
+
+class Atrib extends Comando{
+  String var;
+  Exp expression;
+
+  Atrib(Token id, Exp exp){
+    this.var = id.image;
+    this.expression = exp;
+  }
+}
+
+class Funcall extends Comando{
+  String nomeFun;
+  ArrayList<Exp> args;
+  ListaExp(Token id, ArrayList<Exp> arg){
+    this.nomeFun = id.image;
+    this.args = arg;
+  }
+}
+
+class If extends Comando{
+  Exp expression;
+  ArrayList <Comando> implications;
+  If(Exp exp, ArrayList <Comando> seqComandos){
+    this.expression = exp;
+    this.implications = seqComandos;
+  }
+}
+
+class While extends Comando{
+  Exp expression;
+  ArrayList <Comando> comandos;
+  While(Exp exp, ArrayList <Comando> seqComandos){
+    this.expression = exp;
+    this.comandos = seqComandos;
+  }
+}
+
+class DoWhile extends Comando{
+  Exp expression;
+  ArrayList <Comando> comandos;
+  DoWhile(Exp exp, ArrayList <Comando> seqcomandos){
+    this.expression = exp;
+    this.comandos = seqComandos;
+  }
+}
+
+class Return extends Comando{
+  Exp expression;
+  Return(Exp exp){
+    this.expression = exp;
+  }
+}
+
+class Print extends Comando{
+  Exp expression;
+  Print(Exp exp){
+    this.expression = exp; 
+  }
+}
+
+class Exp {}
+
+class Operador extends Exp{
+  Exp ladoEsq;
+  Exp LadoDir;
+  String Op;
+  Operador(Exp arg1, Exp arg2, String operator){
+    this.ladoEsq = arg1;
+    this.ladoDir = arg2;
+    this.Op = operator;
+  }
+}
+
+////////////////////////////////////////////////////////
+
+class Fator extends Exp {}
+
+class FatorToken_id extends Fator{
+	String id;
+
+	FatorToken_id(String id){
+		this.id = id;
+	}
+}
+
+class FatorListaExp extends Fator{
+	String id;
+	ArrayList <Exp> listExp;
+
+	FatorListaExp(String id, ArrayList <Exp> lExp){
+		this.id = id;
+		this.listExp = lExp;
+	}
+}
+
+class FatorNumLiteral extends Fator{
+	String numLiteral;
+
+	FatorNumLiteral(String nLit){
+		this.numLiteral = nLit;
+	}
+}
+
+class FatorBool extends Fator{
+	String bool;
+
+	FtrTipo(String value){
+		this.bool = value;
+	}
+}
+
+// Precisa?
+class ListaExp{
+	Exp e;
+
+	ListaExp(Exp e){
+		this.e = e;
+	}
+}
+
+class Func{
+	String id;
+	String tipo;
+	ArrayList <ListaArg> argumentos;
+	ArrayList <VarDecl> vd;
+	ArrayList <Comando> seqComandos;
+
+	Func(Token id, String tipo, ArrayList <ListaArg> argumentos, ArrayList <VarDecl> vd, ArrayList <Comando> seqComandos){
+		this.id = id.image;
+		this.tipo = tipo;
+		this.argumentos = argumentos;
+		this.vd = vd;
+		this.seqComandos = seqComandos;
+	}
+}
+
+class ListaArg{
+	String tipo;
+	String id;
+
+	ListaArg(String tipo, Token id){
+		this.tipo = tipo;
+		this.id = id.image;
+	}
+}
+
+
 public class Lugosi {
 
   public static void main(String args[]) throws ParseException,IOException {
     
- Lugosi analisador = new Lugosi(new FileInputStream(args[0]));
- analisador.Lugosi();
+    Lugosi analisador = new Lugosi(new FileInputStream(args[0]));
+    LugosiA arvore = analisador.Lugosi();
+    print (arvore);
+  }
+
+  public static void print(LugosiA arv)
+  {
+
+   System.out.println("int main(){");
+    printComandos(arv.comandos);
+   System.out.println("return 0;}");
+
   }
 
 }
@@ -64,26 +263,29 @@ TOKEN :
 
 }
 
-void Lugosi () : //FEITO
-{}
+LugosiA Lugosi () :
+{ArrayList func = new ArrayList();
+ }
 {
-  Main() (Func())*
+  Main() (Func() {func.add()})*
   <EOF>
+  {return new LugosiA(m, func); }
 }
 
-void Main () : //FEITO
+LugosiA Main () :
 {}
 {
-  <MAIN> <ACHAVES> Vardecl() SeqComandos() <FCHAVES>
+  <MAIN> <ACHAVES> ar1= Vardecl() ar2= SeqComandos() <FCHAVES>
+  {return new LugosiA();}
 }
 
-void Vardecl () : //FEITO
+void Vardecl () :
 {}
 {
   (<VARDECL> Tipo() <ID> <EOL>)*
 }
 
-void Tipo () : //FEITO
+void Tipo () :
 {} 
 {
   <TIPO_BOOL> | <TIPO_FLOAT> | <TIPO_INT> | <TIPO_VOID>
