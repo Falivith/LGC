@@ -1,65 +1,80 @@
 PARSER_BEGIN(Lugosi)
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 
-class LugosiA{
+// Ulian Gabriel ||| André Porto
+
+class LugosiArvore{
   Main main;
   ArrayList<Func> functions;
 
-  Lugosi(Main m, ArrayList<Func> f)
+  LugosiArvore(Main m, ArrayList<Func> f)
   {
     this.main = m;
     this.functions = f;
   }
-}
+} // Check
 
 class Main{
   ArrayList<Vardecl> var;
   ArrayList<Comando> comandos;
 
-  Main(ArrayList<Vardecl> vd, ArrayList<Comando> cm){
-    this.var = vd;
-    this.comandos = cm; 
+  Main(ArrayList<Vardecl> vdcls, ArrayList<Comando> cmds){
+    this.var = vdcls;
+    this.comandos = cmds; 
   }
-}
+} // Check
 
 class Vardecl{
   String tipo;
   String var;
 
-  Vardecl(Token id, String type){
-    this.var = id.image;
-    this.tipo = type;
+  Vardecl(String t, String tok_id){
+    this.tipo = t;
+    this.var = tok_id;
   }
-}
+} // Check
 
-class seqComandos{
-  ArrayList <Comando> comandos;
-  seqComandos(ArrayList<Comando> c){
-    this.comandos = c;
-  }
-}
-
-class Comando{}
+class Comando{} //
 
 class Atrib extends Comando{
   String var;
   Exp expression;
 
-  Atrib(Token id, Exp exp){
+  Atrib(String tok_id, Exp exp){
     this.var = id.image;
     this.expression = exp;
+  }
+} // 
+
+class ExpList{
+  ArrayList<Exp> exprs;
+
+  ExpList(ArrayList exps){
+    this.exprs = exps; 
+  }
+}
+
+class seqComandos{
+
+  ArrayList <Comando> seqComandos;
+
+  seqComandos(ArrayList<Comando> cmds){
+    this.comandos = cmds;
   }
 }
 
 class Funcall extends Comando{
+
   String nomeFun;
-  ArrayList<Exp> args;
-  ListaExp(Token id, ArrayList<Exp> arg){
-    this.nomeFun = id.image;
-    this.args = arg;
+  ArrayList<Exp> exps;
+
+  ListaExp(String tok_id, ArrayList<Exp> args){
+    this.nomeFun = tok_id;
+    this.exps = args;
   }
-}
+} // ??
 
 class If extends Comando{
   Exp expression;
@@ -68,7 +83,7 @@ class If extends Comando{
     this.expression = exp;
     this.implications = seqComandos;
   }
-}
+} // Check
 
 class While extends Comando{
   Exp expression;
@@ -77,7 +92,7 @@ class While extends Comando{
     this.expression = exp;
     this.comandos = seqComandos;
   }
-}
+} // Check
 
 class DoWhile extends Comando{
   Exp expression;
@@ -86,64 +101,59 @@ class DoWhile extends Comando{
     this.expression = exp;
     this.comandos = seqComandos;
   }
-}
+} // Check
 
 class Return extends Comando{
   Exp expression;
   Return(Exp exp){
     this.expression = exp;
   }
-}
+} // Check
 
 class Print extends Comando{
   Exp expression;
   Print(Exp exp){
     this.expression = exp; 
   }
-}
+} // Check
 
-class Exp {}
+class Exp {} // 
 
-class Operador extends Exp{
+class Operation extends Exp{
   Exp ladoEsq;
   Exp LadoDir;
   String Op;
-  Operador(Exp arg1, Exp arg2, String operator){
+
+  Operation(Exp arg1, Exp arg2, String operator){
     this.ladoEsq = arg1;
     this.ladoDir = arg2;
     this.Op = operator;
   }
-}
+} //
 
-////////////////////////////////////////////////////////
-
-class Fator extends Exp {}
-
-class FatorToken_id extends Fator{
+class FatorToken_id extends Exp{
 	String id;
 
-	FatorToken_id(String id){
-		this.id = id;
+	FatorToken_id(String tok_id){
+		this.id = tok_id;
 	}
-}
+} //
 
 class FatorListaExp extends Fator{
-	String id;
 	ArrayList <Exp> listExp;
 
-	FatorListaExp(String id, ArrayList <Exp> lExp){
-		this.id = id;
+	FatorListaExp(ArrayList <Exp> lExp){
 		this.listExp = lExp;
 	}
-}
+} //
 
-class FatorNumLiteral extends Fator{
+class FatorNumLiteral extends Exp{
 	String numLiteral;
 
 	FatorNumLiteral(String nLit){
 		this.numLiteral = nLit;
 	}
-}
+} // 
 
 class FatorBool extends Fator{
 	String bool;
@@ -151,25 +161,16 @@ class FatorBool extends Fator{
 	FtrTipo(String value){
 		this.bool = value;
 	}
-}
-
-// Precisa?
-class ListaExp{
-	Exp e;
-
-	ListaExp(Exp e){
-		this.e = e;
-	}
-}
+} // 
 
 class Func{
 	String id;
 	String tipo;
-	ArrayList <ListaArg> argumentos;
+	ListaArg argumentos;
 	ArrayList <VarDecl> vd;
 	ArrayList <Comando> seqComandos;
 
-	Func(Token id, String tipo, ArrayList <ListaArg> argumentos, ArrayList <VarDecl> vd, ArrayList <Comando> seqComandos){
+	Func(Token id, String tipo, ListaArg argumentos, ArrayList <VarDecl> vd, ArrayList <Comando> seqComandos){
 		this.id = id.image;
 		this.tipo = tipo;
 		this.argumentos = argumentos;
@@ -179,35 +180,128 @@ class Func{
 }
 
 class ListaArg{
-	String tipo;
-	String id;
+	ArrayList<String> tipos;
+	ArrayList<String> t_ids;
 
-	ListaArg(String tipo, Token id){
-		this.tipo = tipo;
-		this.id = id.image;
+	ListaArg(ArrayList tipo, ArrayList token_ids){
+		this.tipos = tipo;
+		this.t_ids = token_ids.image;
 	}
-}
 
+  class Operator{
+    String op;
+    Operator(String op)
+    {this.op=op;}
+  }
+
+  class Tipo{
+    String tipo;
+    Tipo(String tipo)
+    {this.tipo=tipo;}
+  }
+}
 
 public class Lugosi {
 
   public static void main(String args[]) throws ParseException,IOException {
+
+    fileWriter file = new FileWriter("out.c");
+    PrintWriter printer = new PrintWriter(file); 
     
     Lugosi analisador = new Lugosi(new FileInputStream(args[0]));
     LugosiA arvore = analisador.Lugosi();
     print (arvore);
+    printer.close();
   }
 
   public static void print(LugosiA arv)
   {
+    printer.printf("#include <stdio.h>\n");
+    printer.printf("#include <stdlib.h>\n");
+    printer.printf("#include <stdbool.h>\n\n");
 
-   System.out.println("int main(){");
+    
+    System.out.println("int main(){");
     printComandos(arv.comandos);
-   System.out.println("return 0;}");
-
+    System.out.println("return 0;}");
   }
 
+  public static void printMain(Main m, PrintWriter printer){
+    printer.printf("int main(){\n");
+    printVardecl(m.var, PrintWriter printer)
+    printComandos(m.comandos, PrintWriter printer)
+    printer.printf("}");
+  }
+
+  public static void printVardecl(ArrayList<Vardecl> vardeclarations, PrintWriter printer){
+    for(Vardecl v : vardecls){
+      printer.printf("\t" + v.tipo + " " + v.var + ";\n");
+    }
+  }
+
+  public static void printComandos(ArrayList<Comandos> seqComandos, PrintWriter printer){
+    for(Comando cmd : seqComandos){
+      if(cmd instanceof If){
+        printer.printf("\tif(" + printExp((If)cmd.expression) "){\n");
+        printComandos(((If)cmd).implications, printer);
+        printer.printf("\t}\n");
+      }
+      else if(cmd instanceof While){
+        printer.printf("\twhile(" + printExp((While)cmd.expression)")")
+        printComandos(((While)cmd).comandos, printer);
+        printer.printf
+      }
+      else if(cmd instanceof DoWhile){
+        printer.printf("\tdo{\n")
+        printComandos(((DoWhile)cmd).comandos, printer);
+        printer.printf("\t}while(" + printExp(((DoWhile)cmd).exp) + ");\n")
+      }
+      else if(cmd instanceof Return){
+        printer.printf("\treturn " + printExp(((Return)cmd).expression) + ";\n");
+      }
+      else if(cmd instanceof Print){
+        printer.printf("\tprintf(\"" + printExp(((Print)cmd).expression) + "\");\n");
+      }
+      else if(cmd instanceof Funcall){
+        printer.printf("\t" + ((Funcall)cmd).nomeFun + "(");
+        if(((Funcall)cmd).args != null){
+          printExp(((Funcall)cmd).args);
+        }
+        printer.printf(");\n");
+      }
+      else { // Só resta atrib
+        printer.printf("\t" + ((Atrib)cmd).var + " = " + printExp(((Atrib)cmd).expression) + ";\n");
+      }
+    }
+  }
+
+  public static String printExp(Exp expression){
+    if(expression instanceof Operador){
+      return ("(" + printExp(((Operador)expression).LadoEsq) + " " + PrintOp(((Operador)expression).Op) + " " + geraExp(((Operador)expression).LadoDir) + ")");
+    }
+    else if(expression instanceof atrib_func){
+      String s = new String();
+      if(((atrib_func)e).listaexp != null){
+        s = (((atrib_func)e).token_id + "(" + geraListaexp(((atrib_func)e).listaexp) + ")");
+      }
+      else{
+        s = (((atrib_func)e).token_id + "()");
+      }
+      return s;
+    }
+    else if(e instanceof tid){
+      return ((tid)e).token_id;
+    }
+    else if(e instanceof tboolean){
+      return ((tboolean)e).tipo_bool;
+    }
+    else{ // num
+      return ((Num)e).num;
+    }
+  }
 }
+
+
 
 PARSER_END(Lugosi)
 
@@ -263,75 +357,117 @@ TOKEN :
 
 }
 
-LugosiA Lugosi () :
-{ArrayList func = new ArrayList();
- }
+LugosiArvore Lugosi () :
+{ 
+  Main main_ = new Main(null, null);
+  ArrayList functions = new ArrayList();
+}
 {
-  Main() (Func() {func.add()})*
-  <EOF>
-  {return new LugosiA(m, func); }
+  (main_ = Main() (Func(functions))? <EOF>)
+
+  {return new LugosiArvore(main_, functions); }
 }
 
-LugosiA Main () :
-{}
+Main Main () :
+{ 
+  ArrayList vrdcls = new ArrayList();
+  ArrayList comandos = new ArrayList();
+}
 {
-  <MAIN> <ACHAVES> ar1= Vardecl() ar2= SeqComandos() <FCHAVES>
-  {return new LugosiA();}
+  <MAIN> <ACHAVES> Vardecl(vrdcls) SeqComandos(comandos) <FCHAVES>
+  {return new Main(vrdcls, comandos);}
 }
 
-void Vardecl () :
-{}
+void Vardecl (ArrayList vrdcls) :
 {
-  (<VARDECL> Tipo() <ID> <EOL>)*
+  Tipo t = null;
+  Token id = null;
+  Vardecl vd = null;
+}
+{
+  (<VARDECL> t = Tipo() id = <ID> <EOL> { vd = new Vardecl(t, id.image); } { vrdlcs.add(vd); } )*
 }
 
 void Tipo () :
-{} 
 {
-  <TIPO_BOOL> | <TIPO_FLOAT> | <TIPO_INT> | <TIPO_VOID>
+  Token t = null; 
+  Tipo res = null;
+} 
+{
+    (t = <TIPO_BOOL> {result = new Tipo(t.image); })
+  | (t = <TIPO_FLOAT> {result = new Tipo(t.image);})
+  | (t = <TIPO_INT> {result = new Tipo(t.image);})
+  | (t = <TIPO_VOID> {result = new Tipo(t.image);})
+
+  {return res;}
 }
 
-void SeqComandos () : //FEITO
-{}
+void SeqComandos (ArrayList sqcom) : //FEITO
 {
-  Comando() SeqComandos_()
+  Comando c = null;
+}
+{
+  (r = Comando() {sqcom.add(r);})*
 }
 
-void SeqComandos_() : //FEITO
-{}
+Comando Comando () :
 {
-  (Comando() SeqComandos_())?
+  Token id = null;
+  Exp exprs = null;
+  ArrayList x = new ArrayList();
+  Comando c = null;
+  Cmando res = null;
+}
+{
+    (id = <ID> c = Comando_(id) {result = c;})
+  | (<IF> <APARENT> exprs = Exp() <FPARENT> <DO> <ACHAVES> SeqComandos(x) <FCHAVES> <EOL> {result = new If(exprs, x);})
+  | (<WHILE> <APARENT> exprs = Exp() <FPARENT> <DO> <ACHAVES> SeqComandos(x) <FCHAVES> <EOL> {result = new While(exprs, x);})
+  | (<DO> <ACHAVES> SeqComandos(x) <FCHAVES> <WHILE> <APARENT> exprs = Exp() <FPARENT> <EOL> {result = new DoWhile(exprs, x);})
+  | (<RETURN> exprs = Exp() <EOL> {result = new Return(exprs)};)
+  | (<PRINT> <APARENT> expres = Exp() <FPARENT> <EOL> {result = new Print(exprs);})
+
 }
 
-void Comando () : //Implementar
-{}
+Comando Comando_ (Token id) :
 {
-    (<ID> Comando_())
-  | (<IF> <APARENT> Exp() <FPARENT> <DO> <ACHAVES> SeqComandos() <FCHAVES> <EOL>)
-  | (<WHILE> <APARENT> Exp() <FPARENT> <DO> <ACHAVES> SeqComandos() <FCHAVES> <EOL>)
-  | (<DO> <ACHAVES> SeqComandos() <FCHAVES> <WHILE> <APARENT> Exp() <FPARENT> <EOL>)
-  | (<RETURN> Exp() <EOL>)
-  | (<PRINT> <APARENT> Exp() <FPARENT> <EOL>)
+  Exp exprs = null;
+  ExpList xpList = null;
+  Comando res = null;
+}
+{
+    ((<ASSIGN> exprs = Exp() <EOL>) {res = new Atrib(id.image, exprs);}) 
+  | ((<APARENT> (xpList = ListaExp())? <FPARENT> <EOL>) {res = new Funcall(id.image, xpList);})
 
+  {return res;}
 }
 
-void Comando_ () :
-{}
+Exp Exp () : 
 {
-  (<ASSIGN> Exp() <EOL>) | (<APARENT> (ListaExp())? <FPARENT> <EOL>)
+  Token id = null;
+  ListaArg listArgs = null;
+  Exp exp1 = null;
+  Exp exp2 = null;
+  Operator op = null;
+  Exp res = null;
 }
-
-void Exp () : 
-{}
 {
-  (<APARENT> Exp() Op() Exp() <FPARENT>) | Fator()
+  (<APARENT> exp1 = Exp() op = Op() exp2 = Exp() <FPARENT>) {res = new Operation(exp1, exp2, op);}
+  | (exp1 = Fator() {res = exp1;})
+
+  {return res;}
 }
 
 void Fator () :
-{}
+{
+  Token t = null; 
+  Exp lisExp = null;
+  Exp res = null;
+}
 {
   <ID> ( <APARENT> (ListaExp())? <FPARENT> )? |
-  <NUM> | <BOOL_TRUE> | <BOOL_FALSE>
+    <NUM> 
+  | <BOOL_TRUE> 
+  | <BOOL_FALSE>
 }
 
 void Op () : // FEITO
