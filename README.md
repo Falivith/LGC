@@ -9,7 +9,9 @@ O compilador converte a Linguagem Lugosi para código C.
 Para fins de organização, foi adotada a seguinte estratégia para compilação dos arquivos:
 - Pra compilar o Lugosi.jj, da pasta "src" dê um "javacc -OUTPUT_DIRECTORY:srcJavaFiles Lugosi.jj"
 - Para compilar os arquivos do Parser em conjunto com o gerador de código, vá na pasta "srcJavaFiles" e dê um "javac Lugosi.java -Xlint:unchecked -d classFiles"
-- Para executar, entre na pasta "classFiles" e lance "./Lugosi ex.lug" ... ... 
+- Para executar, entre na pasta "classFiles" e lance "./Lugosi ex.lug" ... ...
+
+O repositório também contém as quatro fases dos exercícios desenvolvidos no começo do semestre, que envolvem a modificação de um compilador simples para expressões matemáticas. 
 
 O código em C será imprimido no console e também sairá em um ".out" na pasta classFiles. 
 
