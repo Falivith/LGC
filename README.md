@@ -13,8 +13,4 @@ Para fins de organização, foi adotada a seguinte estratégia para compilação
 
 O código em C será imprimido no console e também sairá em um ".out" na pasta classFiles. 
 
-Pra compilar o .jj, vai na src e dá um "javacc -OUTPUT_DIRECTORY:srcJavaFiles Lugosi.jj"
-Pra compilar os java, entra na srcJavaFIles e dá um "javac Lugosi.java -d classFiles"
-aí entra no classfiles
-
 Desenvolvido em conjunto com André Porto, na disciplina de <strong> Projeto de Compiladores</strong>, primeiro semestre de 2023. 
