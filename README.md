@@ -7,9 +7,9 @@ Primeiro foi feita a análise léxica, depois a análise sintática, e depois a 
 O compilador converte a Linguagem Lugosi para código C.
 
 Para fins de organização, foi adotada a seguinte estratégia para compilação dos arquivos:
-1 - Pra compilar o Lugosi.jj, da pasta "src" dê um "javacc -OUTPUT_DIRECTORY:srcJavaFiles Lugosi.jj"
-2 - Para compilar os arquivos do Parser em conjunto com o gerador de código, vá na pasta "srcJavaFiles" e dê um "javac Lugosi.java -Xlint:unchecked -d classFiles"
-3 - Para executar, entre na pasta "classFiles" e lance "./Lugosi ex.lug" ... ... 
+- Pra compilar o Lugosi.jj, da pasta "src" dê um "javacc -OUTPUT_DIRECTORY:srcJavaFiles Lugosi.jj"
+- Para compilar os arquivos do Parser em conjunto com o gerador de código, vá na pasta "srcJavaFiles" e dê um "javac Lugosi.java -Xlint:unchecked -d classFiles"
+- Para executar, entre na pasta "classFiles" e lance "./Lugosi ex.lug" ... ... 
 
 O código em C será imprimido no console e também sairá em um ".out" na pasta classFiles. 
 
