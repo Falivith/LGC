@@ -1,14 +1,14 @@
 main{
-    var int teste;
-    teste := 9;
-    print( tester (teste) );
+	var int resultmedia;
+
+	resultmedia := media(50, 20);
+
+	print( resultmedia );
 }
 
-function int tester(int n) {
-	var int total;
-	total := 0;
-	do {
-		total := (total + n);
-	} while((total < 10));
-	return total;
+function int media(int n, int x) {
+	var int y;
+	y := ((n + x)/2);
+
+	return y;
 }

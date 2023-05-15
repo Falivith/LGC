@@ -1,12 +1,32 @@
 main{
     var int teste;
-    teste := 9;
+    teste := 1;
     tester (teste);
 }
 
-function bool tester(int n) {
+function int tester(int n) {
 	do {
 		print(n);
-		n:=(n+1);
+		n := (n + 1);
 	} while((n < 10));
+
+	if((5 < 10))do{
+		print(n);
+	};
+
+	return n;
 }
+
+function int x(int n) {
+	do {
+		print(n);
+		n := (n + 1);
+	} while((n < 10));
+
+	if((5 < 10))do{
+		print(n);
+	};
+
+	return n;
+}
+

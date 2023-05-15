@@ -49,7 +49,7 @@ public interface LugosiConstants {
   /** RegularExpression Id. */
   int EOL = 24;
   /** RegularExpression Id. */
-  int COMMA = 25;
+  int VIRG = 25;
   /** RegularExpression Id. */
   int PLUS = 26;
   /** RegularExpression Id. */

@@ -1,0 +1,22 @@
+main{
+    var int teste;
+    var int resultado;
+    
+	teste := 1;
+
+	resultado := tester(teste);
+
+    print( resultado );
+}
+
+function int tester(int n) {
+	var int total;
+	total := 0;
+
+	do {
+		total := (total + n);
+		n := (n + 1);
+	} while((n < 10));
+    
+	return total;
+}
